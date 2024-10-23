@@ -1,0 +1,47 @@
+Vagrant.configure("2") do |config|
+  # Use Debian as the base box
+  config.vm.box = "debian/bullseye64"
+  
+  # Set the VM's hostname
+  config.vm.hostname = "docker-vm"
+
+  # Network configuration (optional)
+ 
+  # config.vm.network "private_network", ip: "192.168.56.1", netmask: "255.255.0.0"
+
+  # Provision the VM to install Docker
+  config.vm.provision "shell", inline: <<-SHELL
+    # Install docker
+    # Add Docker's official GPG key:
+    sudo apt-get update
+    sudo apt-get install ca-certificates curl
+    sudo install -m 0755 -d /etc/apt/keyrings
+    sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+    sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+    # Add the repository to Apt sources:
+    echo \
+      "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+      $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+      sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    sudo apt-get update
+    sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+    # Allow the 'vagrant' user to run Docker commands without sudo
+    usermod -aG docker vagrant
+
+    docker run hello-world
+  SHELL
+
+  # Forward ports (optional, adjust as needed)
+  config.vm.network "forwarded_port", guest: 80, host: 8080
+
+  # Sync folders (optional)
+  # config.vm.synced_folder "./data", "/vagrant_data"
+
+  # Optional VM customization (e.g., increase memory)
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "1024"
+    vb.cpus = 2
+  end
+end
