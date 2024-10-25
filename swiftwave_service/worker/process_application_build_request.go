@@ -181,7 +181,11 @@ func (m Manager) buildApplicationForGit(deployment *core.Deployment, db gorm.DB,
 	// -- can be security risk for html based apps
 	// -- if nginx is running inside container, that can expose the .git folder to public
 	gitFolder := filepath.Join(tempDirectory, ".git")
-	os.RemoveAll(gitFolder)
+	err = os.RemoveAll(gitFolder)
+	if err != nil {
+		addPersistentDeploymentLog(dbWithoutTx, pubSubClient, deployment.ID, "Failed to delete the .git folder of cloned repository\n", false)
+		addPersistentDeploymentLog(dbWithoutTx, pubSubClient, deployment.ID, "Reason > "+err.Error()+"\n", false)
+	}
 	addPersistentDeploymentLog(dbWithoutTx, pubSubClient, deployment.ID, "Cloned git repository successfully\n", false)
 	addPersistentDeploymentLog(dbWithoutTx, pubSubClient, deployment.ID, "Commit message > "+commitMessage+"\n", false)
 	addPersistentDeploymentLog(dbWithoutTx, pubSubClient, deployment.ID, "Commit hash > "+commitHash+"\n", false)
