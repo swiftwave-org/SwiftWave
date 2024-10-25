@@ -4,6 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"log"
+	"os"
+	"path/filepath"
+
 	"github.com/google/uuid"
 	containermanger "github.com/swiftwave-org/swiftwave/container_manager"
 	dockerconfiggenerator "github.com/swiftwave-org/swiftwave/docker_config_generator"
@@ -11,9 +15,6 @@ import (
 	"github.com/swiftwave-org/swiftwave/pubsub"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/core"
 	"gorm.io/gorm"
-	"log"
-	"os"
-	"path/filepath"
 )
 
 func (m Manager) BuildApplication(request BuildApplicationRequest, ctx context.Context, cancelContext context.CancelFunc) error {
@@ -176,6 +177,15 @@ func (m Manager) buildApplicationForGit(deployment *core.Deployment, db gorm.DB,
 		addPersistentDeploymentLog(dbWithoutTx, pubSubClient, deployment.ID, "Reason > "+err.Error()+"\n", true)
 		return err
 	}
+	// delete .git folder after cloning
+	// -- can be security risk for html based apps
+	// -- if nginx is running inside container, that can expose the .git folder to public
+	gitFolder := filepath.Join(tempDirectory, ".git")
+	err = os.RemoveAll(gitFolder)
+	if err != nil {
+		addPersistentDeploymentLog(dbWithoutTx, pubSubClient, deployment.ID, "Failed to delete the .git folder of cloned repository\n", false)
+		addPersistentDeploymentLog(dbWithoutTx, pubSubClient, deployment.ID, "Reason > "+err.Error()+"\n", false)
+	}
 	addPersistentDeploymentLog(dbWithoutTx, pubSubClient, deployment.ID, "Cloned git repository successfully\n", false)
 	addPersistentDeploymentLog(dbWithoutTx, pubSubClient, deployment.ID, "Commit message > "+commitMessage+"\n", false)
 	addPersistentDeploymentLog(dbWithoutTx, pubSubClient, deployment.ID, "Commit hash > "+commitHash+"\n", false)
@@ -196,7 +206,7 @@ func (m Manager) buildApplicationForGit(deployment *core.Deployment, db gorm.DB,
 	if err != nil {
 		return err
 	}
-	var buildArgsMap = make(map[string]string)
+	buildArgsMap := make(map[string]string)
 	for _, buildArg := range buildArgs {
 		buildArgsMap[buildArg.Key] = buildArg.Value
 	}
@@ -272,7 +282,7 @@ func (m Manager) buildApplicationForTarball(deployment *core.Deployment, db gorm
 	if err != nil {
 		return err
 	}
-	var buildArgsMap = make(map[string]string)
+	buildArgsMap := make(map[string]string)
 	for _, buildArg := range buildArgs {
 		buildArgsMap[buildArg.Key] = buildArg.Value
 	}
