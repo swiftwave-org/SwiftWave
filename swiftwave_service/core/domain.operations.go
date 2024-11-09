@@ -73,7 +73,7 @@ func (domain *Domain) UpdateSSLStatus(_ context.Context, db gorm.DB, status Doma
 }
 
 func (domain *Domain) validateAndFillSSLInfo() error {
-	if domain == nil || domain.SSLFullChain == "" {
+	if domain == nil || domain.SSLFullChain == "" || domain.SSLPrivateKey == "" {
 		return nil
 	}
 
