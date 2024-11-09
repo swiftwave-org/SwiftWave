@@ -55,23 +55,23 @@ func sanitizeFileName(fileName string) string {
 	return fileName
 }
 
-func ValidateSSHFullChainCertificate(certString string) error {
-	// Parse the SSH public key (including certificates)
+func ValidateSSLFullChainCertificate(certString string) error {
+	// Parse the SSL public key (including certificates)
 	pubKey, _, _, _, err := ssh.ParseAuthorizedKey([]byte(certString))
 	if err != nil {
-		return fmt.Errorf("failed to parse SSH key: %v", err)
+		return fmt.Errorf("failed to parse SSL public key: %v", err)
 	}
 
 	// Check if it's an SSH certificate
 	_, ok := pubKey.(*ssh.Certificate)
 	if !ok {
-		return fmt.Errorf("provided file is not an SSH certificate")
+		return fmt.Errorf("provided file is not an SSL certificate")
 	}
 
 	return nil
 }
 
-func ValidateSSHPrivateKey(privateKeyString string) error {
+func ValidateSSLPrivateKey(privateKeyString string) error {
 	// Decode the PEM block
 	block, _ := pem.Decode([]byte(privateKeyString))
 	if block == nil {
@@ -81,7 +81,7 @@ func ValidateSSHPrivateKey(privateKeyString string) error {
 	// Try to parse the key as an SSH private key
 	_, err := ssh.ParseRawPrivateKey(block.Bytes)
 	if err != nil {
-		return fmt.Errorf("failed to parse SSH private key: %v", err)
+		return fmt.Errorf("failed to parse SSL private key: %v", err)
 	}
 	return nil
 }

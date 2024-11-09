@@ -114,13 +114,13 @@ func (r *mutationResolver) AddCustomSsl(ctx context.Context, id uint, input mode
 		return nil, err
 	}
 	// validate certificate full chain
-	err = ValidateSSHFullChainCertificate(input.FullChain)
+	err = ValidateSSLFullChainCertificate(input.FullChain)
 	if err != nil {
 		return nil, err
 	}
 
-	// validae certificate private key
-	err = ValidateSSHPrivateKey(input.PrivateKey)
+	// validate certificate private key
+	err = ValidateSSLPrivateKey(input.PrivateKey)
 	if err != nil {
 		return nil, err
 	}
