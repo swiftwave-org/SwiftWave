@@ -35,6 +35,12 @@ func (m Manager) EnqueueSSLGenerateRequest(domainId uint) error {
 	})
 }
 
+func (m Manager) EnqueueSSLProxyUpdateRequest(domainId uint) error {
+	return m.ServiceManager.TaskQueueClient.EnqueueTask(sslProxyUpdateQueueName, SSLProxyUpdateRequest{
+		DomainId: domainId,
+	})
+}
+
 func (m Manager) EnqueueIngressRuleApplyRequest(ingressRuleId uint) error {
 	return m.ServiceManager.TaskQueueClient.EnqueueTask(ingressRuleApplyQueueName, IngressRuleApplyRequest{
 		Id: ingressRuleId,
