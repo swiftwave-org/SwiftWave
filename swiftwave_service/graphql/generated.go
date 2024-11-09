@@ -28191,7 +28191,7 @@ func (ec *executionContext) unmarshalInputCustomSSLInput(ctx context.Context, ob
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"fullChain", "privateKey", "sslIssuer"}
+	fieldsInOrder := [...]string{"fullChain", "privateKey"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -28212,13 +28212,6 @@ func (ec *executionContext) unmarshalInputCustomSSLInput(ctx context.Context, ob
 				return it, err
 			}
 			it.PrivateKey = data
-		case "sslIssuer":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("sslIssuer"))
-			data, err := ec.unmarshalNString2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.SslIssuer = data
 		}
 	}
 
