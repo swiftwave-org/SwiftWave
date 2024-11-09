@@ -2,8 +2,15 @@ package graphql
 
 import (
 	"context"
+	"encoding/pem"
 	"errors"
 	"fmt"
+	"log"
+	"os"
+	"os/user"
+	"path/filepath"
+	"strings"
+
 	containermanger "github.com/swiftwave-org/swiftwave/container_manager"
 	dockerconfiggenerator "github.com/swiftwave-org/swiftwave/docker_config_generator"
 	haproxymanager "github.com/swiftwave-org/swiftwave/haproxy_manager"
@@ -11,12 +18,8 @@ import (
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/graphql/model"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/logger"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/manager"
+	"golang.org/x/crypto/ssh"
 	"gorm.io/gorm"
-	"log"
-	"os"
-	"os/user"
-	"path/filepath"
-	"strings"
 )
 
 func convertMapToDockerConfigBuildArgs(input map[string]dockerconfiggenerator.Variable) []*model.DockerConfigBuildArg {
@@ -50,6 +53,37 @@ func sanitizeFileName(fileName string) string {
 	// You can add more sanitization rules as needed
 
 	return fileName
+}
+
+func ValidateSSLFullChainCertificate(certString string) error {
+	// Parse the SSL public key (including certificates)
+	pubKey, _, _, _, err := ssh.ParseAuthorizedKey([]byte(certString))
+	if err != nil {
+		return fmt.Errorf("failed to parse SSL public key: %v", err)
+	}
+
+	// Check if it's an SSH certificate
+	_, ok := pubKey.(*ssh.Certificate)
+	if !ok {
+		return fmt.Errorf("provided file is not an SSL certificate")
+	}
+
+	return nil
+}
+
+func ValidateSSLPrivateKey(privateKeyString string) error {
+	// Decode the PEM block
+	block, _ := pem.Decode([]byte(privateKeyString))
+	if block == nil {
+		return fmt.Errorf("failed to decode PEM block from private key")
+	}
+
+	// Try to parse the key as an SSH private key
+	_, err := ssh.ParseRawPrivateKey(block.Bytes)
+	if err != nil {
+		return fmt.Errorf("failed to parse SSL private key: %v", err)
+	}
+	return nil
 }
 
 func FetchDockerManager(ctx context.Context, db *gorm.DB) (*containermanger.Manager, error) {

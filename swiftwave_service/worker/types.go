@@ -22,6 +22,7 @@ const (
 	redirectRuleApplyQueueName                                 = "redirect_rule_apply"
 	redirectRuleDeleteQueueName                                = "redirect_rule_delete"
 	sslGenerateQueueName                                       = "ssl_generate"
+	sslProxyUpdateQueueName                                    = "ssl_update_proxy"
 	persistentVolumeBackupQueueName                            = "persistent_volume_backup"
 	persistentVolumeRestoreQueueName                           = "persistent_volume_restore"
 	installDependenciesOnServerQueueName                       = "install_dependencies_on_server"
@@ -74,6 +75,11 @@ type IngressRuleHttpsRedirectRequest struct {
 
 // SSLGenerateRequest : request payload for ssl generate
 type SSLGenerateRequest struct {
+	DomainId uint `json:"domain_id"`
+}
+
+// SSLProxyUpdateRequest : request payload for updatin SSL ceritifcate on proxies
+type SSLProxyUpdateRequest struct {
 	DomainId uint `json:"domain_id"`
 }
 
