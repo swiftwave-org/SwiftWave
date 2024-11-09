@@ -5,8 +5,10 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"errors"
-	"gorm.io/gorm"
+	"strings"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 // This file contains the operations for the Domain model.
@@ -33,7 +35,7 @@ func (domain *Domain) FindById(_ context.Context, db gorm.DB, id uint) error {
 }
 
 func (domain *Domain) Create(_ context.Context, db gorm.DB) error {
-	err := domain.fillSSLInfo()
+	err := domain.validateAndFillSSLInfo()
 	if err != nil {
 		return err
 	}
@@ -42,7 +44,7 @@ func (domain *Domain) Create(_ context.Context, db gorm.DB) error {
 }
 
 func (domain *Domain) Update(_ context.Context, db gorm.DB) error {
-	err := domain.fillSSLInfo()
+	err := domain.validateAndFillSSLInfo()
 	if err != nil {
 		return err
 	}
@@ -66,16 +68,58 @@ func (domain *Domain) Delete(_ context.Context, db gorm.DB) error {
 
 func (domain *Domain) UpdateSSLStatus(_ context.Context, db gorm.DB, status DomainSSLStatus) error {
 	domain.SSLStatus = status
-	tx := db.Where("id = ?", domain.ID).Update("ssl_status", status)
+	tx := db.Model(&domain).Where("id = ?", domain.ID).Update("ssl_status", status)
 	return tx.Error
 }
 
-func (domain *Domain) fillSSLInfo() error {
+func (domain *Domain) validateAndFillSSLInfo() error {
 	if domain == nil || domain.SSLFullChain == "" {
 		return nil
 	}
+
+	// if ssl full chain or private key is missing \n at the end , add it
+	if !strings.HasSuffix(domain.SSLFullChain, "\n") {
+		domain.SSLFullChain = domain.SSLFullChain + "\n"
+	}
+	if !strings.HasSuffix(domain.SSLPrivateKey, "\n") {
+		domain.SSLPrivateKey = domain.SSLPrivateKey + "\n"
+	}
+
+	// validate private key
+	keyBytes := []byte(domain.SSLPrivateKey)
+	block, _ := pem.Decode(keyBytes)
+	if block == nil {
+		return errors.New("failed to decode SSL private key")
+	}
+	// Attempt parsing the key as any supported private key format
+	isValidated := false
+	_, err := x509.ParsePKCS8PrivateKey(block.Bytes)
+	if err == nil {
+		isValidated = true // Key is valid PKCS8
+	}
+
+	if !isValidated {
+
+		_, err = x509.ParsePKCS1PrivateKey(block.Bytes)
+		if err == nil {
+			isValidated = true // Key is valid PKCS1
+		}
+	}
+
+	if !isValidated {
+		_, err = x509.ParseECPrivateKey(block.Bytes)
+		if err == nil {
+			isValidated = true // Key is valid EC
+		}
+	}
+
+	if !isValidated {
+		return errors.New("provided private keys is not a valid private key (RSA, PKCS8, PKCS1, or EC)")
+	}
+
+	// validate full chain certificate
 	certBytes := []byte(domain.SSLFullChain)
-	block, _ := pem.Decode(certBytes)
+	block, _ = pem.Decode(certBytes)
 	if block == nil {
 		return errors.New("failed to decode SSL full chain certificate")
 	}
