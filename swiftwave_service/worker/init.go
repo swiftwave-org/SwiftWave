@@ -62,6 +62,7 @@ func Queues() []string {
 		redirectRuleApplyQueueName,
 		redirectRuleDeleteQueueName,
 		sslGenerateQueueName,
+		sslProxyUpdateQueueName,
 		deletePersistentVolumeQueueName,
 		persistentVolumeBackupQueueName,
 		persistentVolumeRestoreQueueName,
