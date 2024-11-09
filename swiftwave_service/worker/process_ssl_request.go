@@ -43,7 +43,7 @@ func (m Manager) SSLGenerate(request SSLGenerateRequest, ctx context.Context, _ 
 		return nil
 	}
 	// generate private key [if not found]
-	if domain.SSLPrivateKey == "" {
+	if domain.SSLPrivateKey == "" || strings.Compare(domain.SSLIssuer, "Let's Encrypt") != 0 {
 		privateKey, err := generatePrivateKey()
 		if err != nil {
 			return err
