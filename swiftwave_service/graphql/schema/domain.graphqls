@@ -19,7 +19,6 @@ input DomainInput {
 input CustomSSLInput {
     fullChain: String!
     privateKey: String!
-    sslIssuer: String!
 }
 
 type Domain {

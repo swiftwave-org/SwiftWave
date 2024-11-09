@@ -188,7 +188,6 @@ type ConfigMountInput struct {
 type CustomSSLInput struct {
 	FullChain  string `json:"fullChain"`
 	PrivateKey string `json:"privateKey"`
-	SslIssuer  string `json:"sslIssuer"`
 }
 
 type Dependency struct {
