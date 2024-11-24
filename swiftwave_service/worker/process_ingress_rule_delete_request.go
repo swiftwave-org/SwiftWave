@@ -181,11 +181,21 @@ func (m Manager) IngressRuleDelete(request IngressRuleDeleteRequest, ctx context
 
 		// delete backend
 		backendUsedByOther := true
-		var ingressRuleCheck core.IngressRule
-		err = m.ServiceManager.DbClient.Where("id != ? AND application_id = ? AND target_port = ?", ingressRule.ID, ingressRule.ApplicationID, ingressRule.TargetPort).First(&ingressRuleCheck).Error
-		if err != nil {
-			if errors.Is(err, gorm.ErrRecordNotFound) {
-				backendUsedByOther = false
+		var ingressRuleCheckForApplication core.IngressRule
+		if ingressRule.TargetType == core.ApplicationIngressRule {
+			err = m.ServiceManager.DbClient.Where("id != ? AND application_id = ? AND target_port = ?", ingressRule.ID, ingressRule.ApplicationID, ingressRule.TargetPort).First(&ingressRuleCheckForApplication).Error
+			if err != nil {
+				if errors.Is(err, gorm.ErrRecordNotFound) {
+					backendUsedByOther = false
+				}
+			}
+		}
+		if ingressRule.TargetType == core.ExternalServiceIngressRule {
+			err = m.ServiceManager.DbClient.Where("id != ? AND external_service = ?", ingressRule.ID, ingressRule.ExternalService).First(&ingressRuleCheckForApplication).Error
+			if err != nil {
+				if errors.Is(err, gorm.ErrRecordNotFound) {
+					backendUsedByOther = false
+				}
 			}
 		}
 		if !backendUsedByOther {
