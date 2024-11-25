@@ -22,7 +22,7 @@ require (
 	github.com/oklog/ulid v1.3.1
 	github.com/rabbitmq/amqp091-go v1.10.0
 	github.com/spf13/cobra v1.8.1
-	github.com/stretchr/testify v1.9.0
+	github.com/stretchr/testify v1.10.0
 	github.com/testcontainers/testcontainers-go v0.33.0
 	github.com/tredoe/osutil v1.5.0
 	github.com/vektah/gqlparser/v2 v2.5.19
