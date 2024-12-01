@@ -40,6 +40,7 @@ func (m Manager) SSLGenerate(request SSLGenerateRequest, ctx context.Context, _ 
 			// If SSL generation is invoked at the time of domain creation, don't mark it as failed if domain is not pointing to this server
 			return nil
 		}
+		_ = domain.UpdateSSLStatus(ctx, dbWithoutTx, core.DomainSSLStatusFailed)
 		logger.CronJobLoggerError.Println("Domain", domain.Name, "is not pointing to this server. Marking SSL Issue as failed")
 		return nil
 	}
