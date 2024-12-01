@@ -26,11 +26,11 @@ func (s Manager) ObtainCertificate(domain string, privateKeyStr string) (string,
 	// Parse the DER-encoded key data
 	privateKey, err := x509.ParsePKCS1PrivateKey(block.Bytes)
 	if err != nil {
-		return "", errors.New("unable to parse private key for domain")
+		return "", errors.New("unable to parse private key for domain > " + err.Error())
 	}
 	certs, err := s.client.ObtainCertificate(s.ctx, s.account, privateKey, []string{domain})
 	if err != nil {
-		return "", errors.New("unable to obtain certificate")
+		return "", errors.New("unable to obtain certificate > " + err.Error())
 	}
 	// Get the certificate
 	certificate := certs[0]
