@@ -61,6 +61,7 @@ func (m Manager) SSLGenerate(request SSLGenerateRequest, ctx context.Context, _ 
 	fullChain, err := m.ServiceManager.SslManager.ObtainCertificate(domain.Name, domain.SSLPrivateKey)
 	if err != nil {
 		// don' requeue, if anything happen user can anytime re-request for certificate
+		logger.CronJobLoggerError.Println("Failed to obtain certificate", err.Error(), "\nWill retry later")
 		return nil
 	}
 	// store certificate
@@ -72,6 +73,7 @@ func (m Manager) SSLGenerate(request SSLGenerateRequest, ctx context.Context, _ 
 	// update domain
 	err = domain.Update(ctx, dbWithoutTx)
 	if err != nil {
+		logger.CronJobLoggerError.Println("Failed to update domain", domain.Name, "with SSL status", domain.SSLStatus, err.Error(), "\nWill retry later")
 		return err
 	}
 	// fetch all proxy servers
