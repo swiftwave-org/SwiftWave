@@ -41,6 +41,7 @@ func (m Manager) SSLGenerate(request SSLGenerateRequest, ctx context.Context, _ 
 			return nil
 		}
 		_ = domain.UpdateSSLStatus(ctx, dbWithoutTx, core.DomainSSLStatusFailed)
+		logger.CronJobLoggerError.Println("Domain", domain.Name, "is not pointing to this server. Marking SSL Issue as failed")
 		return nil
 	}
 	// generate private key [if not found]
@@ -52,6 +53,7 @@ func (m Manager) SSLGenerate(request SSLGenerateRequest, ctx context.Context, _ 
 		domain.SSLPrivateKey = privateKey
 		err = domain.Update(ctx, dbWithoutTx)
 		if err != nil {
+			logger.CronJobLoggerError.Println("Failed to update domain", domain.Name, "with private key.", err.Error(), "\nWill retry later")
 			return err
 		}
 	}
@@ -72,16 +74,19 @@ func (m Manager) SSLGenerate(request SSLGenerateRequest, ctx context.Context, _ 
 	// update domain
 	err = domain.Update(ctx, dbWithoutTx)
 	if err != nil {
+		logger.CronJobLoggerError.Println("Failed to update domain", domain.Name, "with SSL status", domain.SSLStatus, err.Error(), "\nWill retry later")
 		return err
 	}
 	// fetch all proxy servers
 	proxyServers, err := core.FetchProxyActiveServers(&m.ServiceManager.DbClient)
 	if err != nil {
+		logger.CronJobLoggerError.Println("Failed to fetch proxy servers while generating SSL certificate", err.Error(), "\nWill retry later")
 		return err
 	}
 	// fetch all haproxy managers
 	haproxyManagers, err := manager.HAProxyClients(context.Background(), proxyServers)
 	if err != nil {
+		logger.CronJobLoggerError.Println("Failed to fetch haproxy managers while generating SSL certificate", err.Error())
 		return err
 	}
 	// map of server ip and transaction id
@@ -92,6 +97,7 @@ func (m Manager) SSLGenerate(request SSLGenerateRequest, ctx context.Context, _ 
 		// generate a new transaction id for haproxy
 		transactionId, err := haproxyManager.FetchNewTransactionId()
 		if err != nil {
+			logger.CronJobLoggerError.Println("Failed to fetch new transaction id while generating SSL certificate", err.Error(), "\nWill retry later")
 			return err
 		}
 		// add to map
@@ -99,6 +105,7 @@ func (m Manager) SSLGenerate(request SSLGenerateRequest, ctx context.Context, _ 
 		// upload certificate to haproxy
 		err = haproxyManager.UpdateSSL(transactionId, domain.Name, []byte(domain.SSLPrivateKey), []byte(domain.SSLFullChain))
 		if err != nil {
+			logger.CronJobLoggerError.Println("Failed to update SSL certificate while generating SSL certificate", err.Error(), "\nWill retry later")
 			isFailed = true
 			break
 		}
@@ -110,10 +117,10 @@ func (m Manager) SSLGenerate(request SSLGenerateRequest, ctx context.Context, _ 
 		}
 		if isFailed || err != nil {
 			isFailed = true
-			log.Println("failed to commit haproxy transaction", err)
+			logger.CronJobLoggerError.Println("Failed to commit haproxy transaction while generating SSL certificate", err.Error())
 			err := haproxyManager.DeleteTransaction(haproxyTransactionId)
 			if err != nil {
-				log.Println("failed to rollback haproxy transaction", err)
+				logger.CronJobLoggerError.Println("Failed to rollback haproxy transaction while generating SSL certificate", err.Error())
 			}
 		}
 	}
