@@ -61,7 +61,8 @@ func (m Manager) SSLGenerate(request SSLGenerateRequest, ctx context.Context, _ 
 	fullChain, err := m.ServiceManager.SslManager.ObtainCertificate(domain.Name, domain.SSLPrivateKey)
 	if err != nil {
 		// don' requeue, if anything happen user can anytime re-request for certificate
-		logger.CronJobLoggerError.Println("Failed to obtain certificate", err.Error(), "\nWill retry later")
+		logger.CronJobLoggerError.Println("Failed to obtain certificate", err.Error())
+		_ = domain.UpdateSSLStatus(ctx, dbWithoutTx, core.DomainSSLStatusFailed)
 		return nil
 	}
 	// store certificate
