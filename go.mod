@@ -15,7 +15,7 @@ require (
 	github.com/golang-migrate/migrate/v4 v4.17.1
 	github.com/hashicorp/go-set v0.1.14
 	github.com/labstack/echo-jwt/v4 v4.3.0
-	github.com/labstack/echo/v4 v4.13.2
+	github.com/labstack/echo/v4 v4.13.3
 	github.com/lib/pq v1.10.9
 	github.com/mholt/acmez v1.2.0
 	github.com/moby/sys/user v0.3.0
