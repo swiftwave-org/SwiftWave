@@ -5,11 +5,6 @@ updates:
     schedule:
       interval: daily
     target-branch: develop
-  - package-ecosystem: "gitsubmodule"
-    directory: "/"
-    schedule:
-      interval: daily
-    target-branch: develop
   - package-ecosystem: gomod
     directory: /
     schedule:
