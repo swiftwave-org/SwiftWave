@@ -21,3 +21,4 @@ graphql-docs
 swiftwave_service/dashboard/www
 *.dot
 swiftwave_snapshot_*.tar.gz
+dashboard/node_modules
