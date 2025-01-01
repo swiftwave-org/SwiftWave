@@ -21,4 +21,34 @@ graphql-docs
 swiftwave_service/dashboard/www
 *.dot
 swiftwave_snapshot_*.tar.gz
+
+# Logs
+dashboard/logs
+dashboard/*.log
+dashboard/npm-debug.log*
+dashboard/yarn-debug.log*
+dashboard/yarn-error.log*
+dashboard/pnpm-debug.log*
+dashboard/lerna-debug.log*
+
 dashboard/node_modules
+dashboard/.DS_Store
+dashboard/dist
+dashboard/dist-ssr
+dashboard/coverage
+dashboard/*.local
+
+dashboard/cypress/videos/
+dashboard/cypress/screenshots/
+
+# Editor directories and files
+dashboard/.vscode/*
+dashboard/!.vscode/extensions.json
+dashboard/.idea
+dashboard/*.suo
+dashboard/*.ntvs*
+dashboard/*.njsproj
+dashboard/*.sln
+dashboard/*.sw?
+
+dashboard/*.tsbuildinfo
