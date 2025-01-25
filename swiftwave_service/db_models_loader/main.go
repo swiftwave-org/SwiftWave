@@ -1,14 +1,15 @@
 package main
 
 import (
-	"ariga.io/atlas-provider-gorm/gormschema"
 	"fmt"
-	SSL "github.com/swiftwave-org/swiftwave/ssl_manager"
-	"github.com/swiftwave-org/swiftwave/swiftwave_service/config/system_config"
-	"github.com/swiftwave-org/swiftwave/swiftwave_service/core"
-	"github.com/swiftwave-org/swiftwave/task_queue"
 	"io"
 	"os"
+
+	"ariga.io/atlas-provider-gorm/gormschema"
+	SSL "github.com/swiftwave-org/swiftwave/pkg/ssl_manager"
+	"github.com/swiftwave-org/swiftwave/pkg/task_queue"
+	"github.com/swiftwave-org/swiftwave/swiftwave_service/config/system_config"
+	"github.com/swiftwave-org/swiftwave/swiftwave_service/core"
 )
 
 func main() {

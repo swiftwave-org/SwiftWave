@@ -8,7 +8,7 @@ import (
 	"sort"
 	"strings"
 
-	GIT "github.com/swiftwave-org/swiftwave/git_manager"
+	GIT "github.com/swiftwave-org/swiftwave/pkg/git_manager"
 
 	"github.com/google/uuid"
 )

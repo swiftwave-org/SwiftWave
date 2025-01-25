@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/fatih/color"
-	"github.com/moby/sys/user"
-	"github.com/swiftwave-org/swiftwave/swiftwave_service/cmd"
 	"os"
 	"os/exec"
 	"strings"
+
+	"github.com/fatih/color"
+	"github.com/moby/sys/user"
+	"github.com/swiftwave-org/swiftwave/swiftwave_service/cmd"
 )
 
 func main() {

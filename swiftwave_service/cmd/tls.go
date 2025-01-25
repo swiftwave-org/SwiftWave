@@ -8,12 +8,6 @@ import (
 	"encoding/pem"
 	"errors"
 	"fmt"
-	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
-	"github.com/spf13/cobra"
-	SSL "github.com/swiftwave-org/swiftwave/ssl_manager"
-	"github.com/swiftwave-org/swiftwave/swiftwave_service/config/local_config"
-	"github.com/swiftwave-org/swiftwave/swiftwave_service/db"
 	"net/http"
 	"os"
 	"os/exec"
@@ -21,6 +15,13 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
+	"github.com/spf13/cobra"
+	SSL "github.com/swiftwave-org/swiftwave/pkg/ssl_manager"
+	"github.com/swiftwave-org/swiftwave/swiftwave_service/config/local_config"
+	"github.com/swiftwave-org/swiftwave/swiftwave_service/db"
 )
 
 func init() {

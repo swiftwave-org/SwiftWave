@@ -3,10 +3,10 @@ package worker
 import (
 	"context"
 	"errors"
-	haproxymanager "github.com/swiftwave-org/swiftwave/haproxy_manager"
+	haproxymanager "github.com/swiftwave-org/swiftwave/pkg/haproxy_manager"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/core"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/manager"
-	udpproxymanager "github.com/swiftwave-org/swiftwave/udp_proxy_manager"
+	udpproxymanager "github.com/swiftwave-org/swiftwave/pkg/udp_proxy_manager"
 	"gorm.io/gorm"
 	"log"
 )

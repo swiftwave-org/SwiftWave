@@ -4,18 +4,19 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"os"
+
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/config/system_config"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/db"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/logger"
 	"gorm.io/gorm"
-	"os"
 
 	"github.com/go-redis/redis/v8"
-	dockerConfigGenerator "github.com/swiftwave-org/swiftwave/docker_config_generator"
-	"github.com/swiftwave-org/swiftwave/pubsub"
-	ssl "github.com/swiftwave-org/swiftwave/ssl_manager"
+	dockerConfigGenerator "github.com/swiftwave-org/swiftwave/pkg/docker_config_generator"
+	"github.com/swiftwave-org/swiftwave/pkg/pubsub"
+	ssl "github.com/swiftwave-org/swiftwave/pkg/ssl_manager"
+	"github.com/swiftwave-org/swiftwave/pkg/task_queue"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/config"
-	"github.com/swiftwave-org/swiftwave/task_queue"
 )
 
 func (manager *ServiceManager) Load(config config.Config) {

@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"context"
 	"errors"
-	"github.com/swiftwave-org/swiftwave/ssh_toolkit"
+	"github.com/swiftwave-org/swiftwave/pkg/ssh_toolkit"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/core"
 	"gorm.io/gorm"
 	"time"

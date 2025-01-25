@@ -3,13 +3,13 @@ package worker
 import (
 	"context"
 	"errors"
-	haproxymanager "github.com/swiftwave-org/swiftwave/haproxy_manager"
+	haproxymanager "github.com/swiftwave-org/swiftwave/pkg/haproxy_manager"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/logger"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/manager"
 	"log"
 	"strings"
 
-	containermanger "github.com/swiftwave-org/swiftwave/container_manager"
+	containermanger "github.com/swiftwave-org/swiftwave/pkg/container_manager"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/core"
 	"gorm.io/gorm"
 )

@@ -3,12 +3,13 @@ package local_config
 import (
 	"errors"
 	"fmt"
-	"github.com/swiftwave-org/swiftwave/ssh_toolkit"
-	"golang.org/x/crypto/bcrypt"
-	"gopkg.in/yaml.v3"
 	"io"
 	"os"
 	"strings"
+
+	"github.com/swiftwave-org/swiftwave/pkg/ssh_toolkit"
+	"golang.org/x/crypto/bcrypt"
+	"gopkg.in/yaml.v3"
 )
 
 var config *Config
