@@ -8,7 +8,7 @@ import (
 	"github.com/docker/docker/api/types/image"
 	"github.com/docker/docker/api/types/network"
 	"github.com/docker/docker/api/types/volume"
-	"github.com/swiftwave-org/swiftwave/ssh_toolkit"
+	"github.com/swiftwave-org/swiftwave/pkg/ssh_toolkit"
 	"io"
 	"log"
 	"os"

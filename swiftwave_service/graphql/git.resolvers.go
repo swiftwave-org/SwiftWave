@@ -7,7 +7,7 @@ package graphql
 import (
 	"context"
 
-	GIT "github.com/swiftwave-org/swiftwave/git_manager"
+	GIT "github.com/swiftwave-org/swiftwave/pkg/git_manager"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/core"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/graphql/model"
 )

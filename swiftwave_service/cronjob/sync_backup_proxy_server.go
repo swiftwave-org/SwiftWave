@@ -2,11 +2,12 @@ package cronjob
 
 import (
 	"context"
-	containermanger "github.com/swiftwave-org/swiftwave/container_manager"
-	"github.com/swiftwave-org/swiftwave/ssh_toolkit"
+	"time"
+
+	containermanger "github.com/swiftwave-org/swiftwave/pkg/container_manager"
+	"github.com/swiftwave-org/swiftwave/pkg/ssh_toolkit"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/core"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/logger"
-	"time"
 )
 
 func (m Manager) SyncBackupProxyServer() {

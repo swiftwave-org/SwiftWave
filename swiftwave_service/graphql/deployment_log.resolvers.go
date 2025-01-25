@@ -10,7 +10,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/swiftwave-org/swiftwave/pubsub"
+	"github.com/swiftwave-org/swiftwave/pkg/pubsub"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/core"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/graphql/model"
 )

@@ -5,13 +5,14 @@ import (
 	_ "embed"
 	"encoding/json"
 	"fmt"
+	"net/http"
+	"strconv"
+
 	"github.com/labstack/echo/v4"
-	"github.com/swiftwave-org/swiftwave/ssh_toolkit"
+	"github.com/swiftwave-org/swiftwave/pkg/ssh_toolkit"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/core"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/manager"
 	"golang.org/x/net/websocket"
-	"net/http"
-	"strconv"
 )
 
 // Initialize : Initialize the server and its routes

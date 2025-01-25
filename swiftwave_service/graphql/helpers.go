@@ -10,9 +10,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	containermanger "github.com/swiftwave-org/swiftwave/container_manager"
-	dockerconfiggenerator "github.com/swiftwave-org/swiftwave/docker_config_generator"
-	haproxymanager "github.com/swiftwave-org/swiftwave/haproxy_manager"
+	containermanger "github.com/swiftwave-org/swiftwave/pkg/container_manager"
+	dockerconfiggenerator "github.com/swiftwave-org/swiftwave/pkg/docker_config_generator"
+	haproxymanager "github.com/swiftwave-org/swiftwave/pkg/haproxy_manager"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/core"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/graphql/model"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/logger"

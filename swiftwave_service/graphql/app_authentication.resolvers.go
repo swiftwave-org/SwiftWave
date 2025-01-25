@@ -7,7 +7,7 @@ package graphql
 import (
 	"context"
 
-	haproxymanager "github.com/swiftwave-org/swiftwave/haproxy_manager"
+	haproxymanager "github.com/swiftwave-org/swiftwave/pkg/haproxy_manager"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/core"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/graphql/model"
 	"gorm.io/gorm"
