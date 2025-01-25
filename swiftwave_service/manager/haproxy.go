@@ -2,8 +2,8 @@ package manager
 
 import (
 	"context"
-	haproxymanager "github.com/swiftwave-org/swiftwave/haproxy_manager"
-	"github.com/swiftwave-org/swiftwave/ssh_toolkit"
+	haproxymanager "github.com/swiftwave-org/swiftwave/pkg/haproxy_manager"
+	"github.com/swiftwave-org/swiftwave/pkg/ssh_toolkit"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/config"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/core"
 	"net"

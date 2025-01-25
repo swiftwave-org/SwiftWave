@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	gitmanager "github.com/swiftwave-org/swiftwave/git_manager"
+	gitmanager "github.com/swiftwave-org/swiftwave/pkg/git_manager"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/stack_parser"
 	"golang.org/x/crypto/ed25519"
 	"golang.org/x/crypto/ssh"

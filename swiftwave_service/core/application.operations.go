@@ -10,7 +10,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/hashicorp/go-set"
-	containermanger "github.com/swiftwave-org/swiftwave/container_manager"
+	containermanger "github.com/swiftwave-org/swiftwave/pkg/container_manager"
 	"gorm.io/gorm"
 )
 

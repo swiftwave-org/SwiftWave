@@ -4,10 +4,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	containermanger "github.com/swiftwave-org/swiftwave/container_manager"
+	"regexp"
+
+	containermanger "github.com/swiftwave-org/swiftwave/pkg/container_manager"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/logger"
 	"gorm.io/gorm"
-	"regexp"
 )
 
 // This file contains the operations for the PersistentVolume model.

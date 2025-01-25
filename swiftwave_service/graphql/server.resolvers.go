@@ -16,8 +16,8 @@ import (
 	"time"
 
 	"github.com/fatih/color"
-	containermanger "github.com/swiftwave-org/swiftwave/container_manager"
-	"github.com/swiftwave-org/swiftwave/ssh_toolkit"
+	containermanger "github.com/swiftwave-org/swiftwave/pkg/container_manager"
+	"github.com/swiftwave-org/swiftwave/pkg/ssh_toolkit"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/core"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/graphql/model"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/logger"

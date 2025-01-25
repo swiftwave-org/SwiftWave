@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/spf13/cobra"
-	containermanger "github.com/swiftwave-org/swiftwave/container_manager"
+	containermanger "github.com/swiftwave-org/swiftwave/pkg/container_manager"
 	"os"
 	"os/exec"
 )

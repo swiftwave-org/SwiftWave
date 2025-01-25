@@ -2,7 +2,7 @@ package worker
 
 import (
 	"fmt"
-	"github.com/swiftwave-org/swiftwave/pubsub"
+	"github.com/swiftwave-org/swiftwave/pkg/pubsub"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/core"
 	"gorm.io/gorm"
 	"log"

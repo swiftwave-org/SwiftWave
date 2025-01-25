@@ -10,7 +10,7 @@ import (
 	"github.com/fatih/color"
 	"github.com/golang-jwt/jwt/v5"
 	echojwt "github.com/labstack/echo-jwt/v4"
-	"github.com/swiftwave-org/swiftwave/ssh_toolkit"
+	"github.com/swiftwave-org/swiftwave/pkg/ssh_toolkit"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/config"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/console"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/core"

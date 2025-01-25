@@ -9,10 +9,10 @@ import (
 	"path/filepath"
 
 	"github.com/google/uuid"
-	containermanger "github.com/swiftwave-org/swiftwave/container_manager"
-	dockerconfiggenerator "github.com/swiftwave-org/swiftwave/docker_config_generator"
-	gitmanager "github.com/swiftwave-org/swiftwave/git_manager"
-	"github.com/swiftwave-org/swiftwave/pubsub"
+	containermanger "github.com/swiftwave-org/swiftwave/pkg/container_manager"
+	dockerconfiggenerator "github.com/swiftwave-org/swiftwave/pkg/docker_config_generator"
+	gitmanager "github.com/swiftwave-org/swiftwave/pkg/git_manager"
+	"github.com/swiftwave-org/swiftwave/pkg/pubsub"
 	"github.com/swiftwave-org/swiftwave/swiftwave_service/core"
 	"gorm.io/gorm"
 )
